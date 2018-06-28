@@ -11,34 +11,13 @@
 
 		@if($res != null)
 			@foreach($res->Items->Item as $item)
-			<div class="card" style="width: 16rem;">
-				@if (!empty($item->MediumImage->URL))
-					<img class="card-img-top" src="{{$item->MediumImage->URL}}" alt="Card image cap">
-				@else
-					No Image
-				@endif
-			  <div class="card-body">
-			    <h5 class="card-title">
-						@if (!empty($item->ItemAttributes->Title)) 
-							{{ $item->ItemAttributes->Title }}
-						@else
-							No Title
-						@endif
-					</h5>
-			    <p class="card-text">
-						@if (!empty($item->Offers->Offer->OfferListing->Price->Amount))
-						 	{{$item->Offers->Offer->OfferListing->Price->Amount}} 円
-						@else
-							No Price
-						@endif
-			    </p>
+			    <h5>
 					@if (!empty($item->DetailPageURL))
-					 	<a href="{{$item->DetailPageURL}}" class="card-link" target="_blank">商品リンク</a></li>
+					 	<a href="{{$item->DetailPageURL}}" class="card-link" target="_blank">{{ $item->ItemAttributes->Title }}</a>
 					@else
 						No URL
 					@endif
-			  </div>
-		  </div>
+					</h5>
 			@endforeach
 		@endif
 
