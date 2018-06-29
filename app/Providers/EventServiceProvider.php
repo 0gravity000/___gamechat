@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\FetchGameList' => [
             'App\Listeners\OutputGameList',
         ],
+        'App\Events\SortGameList' => [
+            'App\Listeners\OutputTop100GameList',
+        ],
     ];
 
     /**
