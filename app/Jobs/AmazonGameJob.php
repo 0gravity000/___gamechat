@@ -16,6 +16,8 @@ class AmazonGameJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $tries = 5;  //最大リトライ回数を5回に設定
+
     protected $page;
 
     /**
@@ -60,7 +62,7 @@ class AmazonGameJob implements ShouldQueue
         "AssociateTag" => "starfish860-22",
         "SearchIndex" => "VideoGames",
         "Keywords" => "ゲーム ソフト",
-        "ResponseGroup" => "Images,ItemAttributes",
+        "ResponseGroup" => "ItemAttributes",
         "Sort" => "salesrank",
         "ItemPage" => $this->page,
       );
@@ -123,7 +125,7 @@ class AmazonGameJob implements ShouldQueue
       $fileOutputString = $fileOutputString . array_get($games[$i],'title') .','. array_get($games[$i],'detailPageURL') .'\n';
     }
     Storage::put($storagePathName, $fileOutputString);
-    echo $this->page. 'feach done!';
+    echo 'page '. $this->page. ' feach done!';
     /*
     $games = array_values(array_sort($games, function ($value) {
       return $value['title'];
