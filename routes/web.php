@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', 'VideosController@index')->name('home');
+Route::get('/home', 'GamesController@index')->name('home');
 /*
 Route::get('/games', function(){
   for ($page=0; $page < 100; $page++) {
@@ -26,7 +26,7 @@ Route::get('/games', function(){
   }
 });
 */
-Route::get('/games', 'AmazonsController@index');
+Route::get('/games', 'GamesController@initialize');
 
 Route::get('/videos/search', 'VideosController@search');
 

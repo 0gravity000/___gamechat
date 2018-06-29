@@ -4,67 +4,60 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Apikey;
+use App\Game;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class GamesController extends Controller
 {
     public function index() {
-    	$apikey = Apikey::where('user_id', '1')->first();
-    	$apikey = $apikey->key;
-    	//dd($apikey);
-			//Search: list
-			$request_url = 'https://www.googleapis.com/youtube/v3/search?part=id,snippet&id=15'.$apikey;
-			/*
-			$request_url = 'https://www.googleapis.com/youtube/v3/videos?part=player,id,snippet&id=243vDA7Zgq4&key='.$apikey;
+  		$games = Game::all();
+  		return view('home', compact('games'));
+    }
 
-			$request_url = 'https://www.googleapis.com/youtube/v3/search?part=id,snippet&channelId=UCBR8-60-B28hp2BmDPdntcQ&order=viewCount&key='.$apikey;
+    public function initialize() {
+      $storagePath = ('/public/games/');
+      $storagePathName = $storagePath. 'games.txt';
+      $contents = Storage::get($storagePathName);
 
-			$request_url = 'https://www.googleapis.com/youtube/v3/guideCategories?part=id,snippet&regionCode=JP&key='.$apikey;
-
-  	5 => {#210 ▼
-      +"kind": "youtube#guideCategory"
-      +"etag": ""DuHzAJ-eQIiCIp7p4ldoVcVAOeY/81fHLyWLDYMN1EQqlz89HXIdMs4""
-      +"id": "GCR2FtaW5n"
-      +"snippet": {#211 ▼
-        +"channelId": "UCBR8-60-B28hp2BmDPdntcQ"
-        +"title": "Gaming"
+      $gamelists = [];
+      $startpos = 0;
+      while (mb_strpos($contents, ',', $startpos)) {
+        $endpos = mb_strpos($contents, ',', $startpos);
+        $title = mb_substr($contents, $startpos, $endpos - $startpos);
+        $title = str_replace(array("\r\n", "\r", "\n"), '', $title);	//改行コード削除
+        $params = array(
+          "title" => $title,
+        );
+        //var_dump($params);
+        array_push($gamelists, $params);
+        //$br = mb_strpos($contents, '\n', $startpos);
+        $startpos = $endpos +1;
       }
+
+  		$games = Game::all();
+  		if ($games->isEmpty()) {
+  			for ($i=0; $i < count($gamelists); $i++) { 
+  				$game = new Game;
+  				$game->title = array_get($gamelists[$i], 'title');
+  				$game->priority = 500;
+  				$game->save();
+  			}
+  		} else {
+	  			for ($i=0; $i < count($gamelists); $i++) {
+	  				$games = Game::where('title', array_get($gamelists[$i], 'title'));
+	  				if (!$games) {
+		  				$game = new Game;
+		  				$game->title = array_get($gamelists[$i], 'title');
+		  				$game->priority = 500;
+		  				$game->save();
+	  				}
+	  			}
+  		}
+
+  		$games = Game::all();
+  		//dd($games);
+  		return view('layouts.sidebar_left', compact('games'));
     }
 
-			$request_url = 'https://www.googleapis.com/youtube/v3/videoCategories?part=id,snippet&regionCode=JP&key='.$apikey;
-
-    +"kind": "youtube#videoCategory"
-      +"etag": ""DuHzAJ-eQIiCIp7p4ldoVcVAOeY/WmA0qYEfjWsAoyJFSw2zinhn2wM""
-      +"id": "20"
-      +"snippet": {#215 ▼
-        +"channelId": "UCBR8-60-B28hp2BmDPdntcQ"
-        +"title": "Gaming"
-        +"assignable": true
-			*/
-
-			$context = stream_context_create(array(
-		      'http' => array('ignore_errors' => true)
-			 ));
-			$res = file_get_contents($request_url, false, $context);
-			$respons = json_decode($res, false) ;
-			dd($respons);
-			$items = $respons->items;
-			//dd($items);
-			//LBndbaDDl5s
-			//www.youtube.com/embed/LBndbaDDl5s
-			//Videos: list
-			$request_url = 'https://www.googleapis.com/youtube/v3/videos?part=player&id=LBndbaDDl5s&key='.$apikey;
-			$context = stream_context_create(array(
-		      'http' => array('ignore_errors' => true)
-			 ));
-			$res = file_get_contents($request_url, false, $context);
-			//dd($res);
-			$respons = json_decode($res, false) ;
-			//dd($respons);
-			$items = $respons->items;
-			//dd($items);
-
-			return view('videos.search', compact('items'));
-
-			return view('home');
-    }
 }

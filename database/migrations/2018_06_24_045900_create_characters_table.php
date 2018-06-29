@@ -16,8 +16,8 @@ class CreateCharactersTable extends Migration
         Schema::create('characters', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('game_id');
-            $table->string('name');
-            $table->text('summary');
+            $table->string('name')->nullable();
+            $table->text('summary')->nullable();
             $table->integer('priority')->nullable();
             $table->timestamps();
         });
