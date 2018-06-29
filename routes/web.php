@@ -16,6 +16,16 @@ Route::get('/', function () {
 });
 
 Route::get('/home', 'VideosController@index')->name('home');
+/*
+Route::get('/games', function(){
+  for ($page=0; $page < 100; $page++) {
+  		$queue[0] = new \App\Jobs\AmazonGameJob($page);
+  		$this->dispatch(new \App\Jobs\AmazonGameJob($page));
+  		//Queue::push($queue[0]);
+  		//Queue::push(new \App\Jobs\AmazonGameJob($page));
+  }
+});
+*/
 Route::get('/games', 'AmazonsController@index');
 
 Route::get('/videos/search', 'VideosController@search');

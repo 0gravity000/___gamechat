@@ -29,7 +29,7 @@
     <main role="main" class="container-fluid">
     <div class="row">
       <div class="col-sm-3">
-        @yield('sidebar_left')
+        @include('layouts.sidebar_left')
       </div>
       <div class="col">
         @yield('content')
