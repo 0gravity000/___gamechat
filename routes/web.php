@@ -12,13 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/home');
 });
 
 Route::get('/home', 'GamesController@index')->name('home');
 Route::get('/games', 'GamesController@initialize');
 Route::get('/games/{game}', 'GamesController@show');
-
+Route::get('/games/{game}/{video}', 'GamesController@video');
 
 Route::get('/videos/search', 'VideosController@search');
 

@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="author" content="0gravity000">
     <!-- <link rel="icon" href="../../../../favicon.ico"> -->
-    <meta name="discription" content="ゲームの攻略や情報をサイト">
-    <meta name="keywords" content="ゲーム, 攻略">
+    <meta name="discription" content="ゲーム動画の配信やゲーム情報などを記載したサイトです">
+    <meta name="keywords" content="ゲーム, 動画, おすすめ, レビュー, ゲーム 動画, ゲーム おすすめ, ゲーム レビュー">
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({
@@ -21,7 +21,7 @@
     <!-- Bootstrap core CSS -->
 
     <!-- Custom styles for this template -->
-    <link href="./css/starter-template.css" rel="stylesheet">
+    <link href="../css/starter-template.css" rel="stylesheet">
   </head>
 
   <body>
@@ -29,16 +29,13 @@
     <main role="main" class="container-fluid">
     <div class="row">
       <div class="col-sm-2">
-        @include('layouts.home_sidebar_left')
-      </div>
-      <div class="col-sm-2">
-        @include('layouts.home_sidebar_middle')
+        @include('layouts.game_sidebar_left')
       </div>
       <div class="col">
-        @yield('content')
+        @yield('gamecontent')
       </div>
       <div class="col-sm-2">
-        @include('layouts.sidebar_right')
+        @include('layouts.game_sidebar_right')
       </div>
     </div>
     </main><!-- /.container-fluid -->

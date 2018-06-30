@@ -61,6 +61,31 @@ class GamesController extends Controller
     }
 
     public function show($title) {
+
+			$game = Game::where('title', $title)->first();
+			//タイトルにスペースや記号を含むとレスポンスにがNullになるので取る
+      $title = str_replace(array(" ", "  ", "　","(",")","ｰ" ,"－"), '', $title);	//改行コード削除
+
+    	$apikey = Apikey::where('user_id', '1')->first();
+    	$googleKey = $apikey->google_key;
+    	$amazonKey = $apikey->amazon_key;
+    	$amazonSecret = $apikey->amazon_secret;
+    	//dd($apikey);
+			//Search: list
+			$request_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=50&q='.$title.'&key='.decrypt($googleKey);
+			$context = stream_context_create(array(
+		      'http' => array('ignore_errors' => true)
+			 ));
+			$res = file_get_contents($request_url, false, $context);
+			//dd($res);
+			$respons = json_decode($res, false) ;
+			//dd($respons);
+			$gameitems = $respons->items;
+			//dd($gameitems);
+
+  		return view('games.index', compact('game', 'gameitems'));
+
+    	/*
 			//$game = Game::where('title', $title)->first();
 			//dd($game->title);
 			//$title = $game->title;
@@ -120,8 +145,38 @@ class GamesController extends Controller
 				}
 			}
 			//dd($videoPlayers_array);
-
   		return view('games.index', compact('videoPlayers_array'));
+			*/
     }
+    public function video($title, $video) {
 
+    	$apikey = Apikey::where('user_id', '1')->first();
+    	$googleKey = $apikey->google_key;
+
+    	//パラメータ値に指定できる part 名は、id、 snippet、 contentDetails、 fileDetails、 liveStreamingDetails、 player、 processingDetails、 recordingDetails、 statistics、 status、 suggestions、 topicDetails などです。
+    	//videoid t3cLDDwLeJA
+			$request_url = 'https://www.googleapis.com/youtube/v3/videos?part=player,snippet&id='.$video.'&key='.decrypt($googleKey);
+			$context = stream_context_create(array(
+		      'http' => array('ignore_errors' => true)
+			 ));
+			$res = file_get_contents($request_url, false, $context);
+			//dd($res);
+			$respons = json_decode($res, false) ;
+			//dd($respons);
+			$videoitems = $respons->items;
+			//dd($items);
+			/*
+			$videoPlayers_array = [];
+			foreach ($items as $key => $item) {
+        $params = array(
+          "player" => $item->player->embedHtml,
+        );
+        //var_dump($params);
+        array_push($videoPlayers_array, $params);
+			}
+			//dd($videoPlayers_array);
+			*/
+			$game = Game::where('title', $title)->first();
+  		return view('games.video', compact('game', 'videoitems'));
+    }
 }
