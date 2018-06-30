@@ -16,17 +16,9 @@ Route::get('/', function () {
 });
 
 Route::get('/home', 'GamesController@index')->name('home');
-/*
-Route::get('/games', function(){
-  for ($page=0; $page < 100; $page++) {
-  		$queue[0] = new \App\Jobs\AmazonGameJob($page);
-  		$this->dispatch(new \App\Jobs\AmazonGameJob($page));
-  		//Queue::push($queue[0]);
-  		//Queue::push(new \App\Jobs\AmazonGameJob($page));
-  }
-});
-*/
 Route::get('/games', 'GamesController@initialize');
+Route::get('/games/{id}', 'GamesController@show');
+
 
 Route::get('/videos/search', 'VideosController@search');
 

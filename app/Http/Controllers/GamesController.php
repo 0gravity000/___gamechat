@@ -60,4 +60,68 @@ class GamesController extends Controller
   		return view('layouts.sidebar_left', compact('games'));
     }
 
+    public function show($id) {
+			$game = Game::where('id', $id)->first();
+			//dd($game->title);
+			$title = $game->title;
+			//タイトルにスペースや記号を含むとレスポンスにがNullになるので取る
+      $title = str_replace(array(" ", "  ", "　","(",")","ｰ" ,"－"), '', $title);	//改行コード削除
+
+    	$apikey = Apikey::where('user_id', '1')->first();
+    	$googleKey = $apikey->google_key;
+    	$amazonKey = $apikey->amazon_key;
+    	$amazonSecret = $apikey->amazon_secret;
+    	//dd($apikey);
+			//Search: list
+			$request_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q='.$title.'&key='.decrypt($googleKey);
+			$context = stream_context_create(array(
+		      'http' => array('ignore_errors' => true)
+			 ));
+			$res = file_get_contents($request_url, false, $context);
+			//dd($res);
+			$respons = json_decode($res, false) ;
+			//dd($respons);
+			$items = $respons->items;
+			//dd($items);
+
+			$videoId_array = [];
+			foreach ($items as $key => $item) {
+        $params = array(
+          "videoid" => $item->id->videoId,
+        );
+        //var_dump($params);
+        array_push($videoId_array, $params);
+			}
+			//dd($videoId_array);
+
+
+			//LBndbaDDl5s
+			//www.youtube.com/embed/LBndbaDDl5s
+			//Videos: list
+			//$request_url = 'https://www.googleapis.com/youtube/v3/videos?part=player&id=LBndbaDDl5s&key='.decrypt($googleKey);
+			$context = stream_context_create(array(
+		      'http' => array('ignore_errors' => true)
+			 ));
+			$videoPlayers_array = [];
+			for ($i=0; $i < count($videoId_array); $i++) { 
+				$request_url = 'https://www.googleapis.com/youtube/v3/videos?part=player&id='.array_get($videoId_array[$i], 'videoid').'&key='.decrypt($googleKey);
+				$res = file_get_contents($request_url, false, $context);
+				//dd($res);
+				$respons = json_decode($res, false) ;
+				//dd($respons);
+				$items = $respons->items;
+				//dd($items);
+				foreach ($items as $key => $item) {
+	        $params = array(
+	          "player" => $item->player->embedHtml,
+	        );
+	        //var_dump($params);
+	        array_push($videoPlayers_array, $params);
+				}
+			}
+			//dd($videoPlayers_array);
+
+  		return view('games.index', compact('videoPlayers_array'));
+    }
+
 }
