@@ -12,7 +12,8 @@
 		{!! $item->player->embedHtml !!}<br>
 
 		<h2>{{ $item->snippet->title }}</h2>
-		<h3>チャンネル：{{ $item->snippet->channelId }}</h3>
+		<h3>チャンネル：{{ $item->snippet->channelTitle }}</h3>
+		<h3>チャンネルID：{{ $item->snippet->channelId }}</h3>
 		{{ $item->snippet->description }}<br>
 		<br>
 		@endforeach

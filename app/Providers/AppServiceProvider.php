@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
       Schema::defaultStringLength(191);
 
       view()->composer('layouts.sidebar_left', function($view) {
-        $games = \App\Game::all();
+        $games = \App\Game::all()->sortBy('title');
         $view->with(compact('games'));
       });
 

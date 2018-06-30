@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\DB;
 class GamesController extends Controller
 {
     public function index() {
-  		$games = Game::all();
-  		return view('home', compact('games'));
+    	//AppServiceProviderでSidebar_leftに$gamesを渡す
+  		//$games = Game::all()->sortBy('title');
+  		return view('home');
     }
 
     public function initialize() {
@@ -63,16 +64,18 @@ class GamesController extends Controller
     public function show($title) {
 
 			$game = Game::where('title', $title)->first();
+			//タイトルにスペースを含むとレスポンスにがNullになるの + に置換する
+      $title = str_replace(array(" ", "  ", "　"), '+', $title);	//改行コード削除
 			//タイトルにスペースや記号を含むとレスポンスにがNullになるので取る
-      $title = str_replace(array(" ", "  ", "　","(",")","ｰ" ,"－"), '', $title);	//改行コード削除
-
+      //$title = str_replace(array(" ", "  ", "　","(",")","ｰ" ,"－"), '', $title);	//改行コード削除
     	$apikey = Apikey::where('user_id', '1')->first();
     	$googleKey = $apikey->google_key;
     	$amazonKey = $apikey->amazon_key;
     	$amazonSecret = $apikey->amazon_secret;
     	//dd($apikey);
 			//Search: list
-			$request_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=50&q='.$title.'&key='.decrypt($googleKey);
+			$request_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCategoryId=20&maxResults=50&q='.$title.'&key='.decrypt($googleKey);
+    	//dd($request_url);
 			$context = stream_context_create(array(
 		      'http' => array('ignore_errors' => true)
 			 ));
@@ -152,9 +155,16 @@ class GamesController extends Controller
     public function sort($title) {
     	//dd($title);
     	//dd(request());
+    	//dd('stop');
 			$game = Game::where('title', $title)->first();
+			//タイトルにスペースを含むとレスポンスにがNullになるの + に置換する
+      $title = str_replace(array(" ", "  ", "　"), '+', $title);	//改行コード削除
 			//タイトルにスペースや記号を含むとレスポンスにがNullになるので取る
-      $title = str_replace(array(" ", "  ", "　","(",")","ｰ" ,"－"), '', $title);	//改行コード削除
+      //$title = str_replace(array(" ", "  ", "　","(",")","ｰ" ,"－"), '', $title);	//改行コード削除
+      $keyword = '';
+      if(request()->keyword){
+	      $keyword = str_replace(array(" ", "  ", "　"), '+', request()->keyword);	//改行コード削除
+      }
 
     	$apikey = Apikey::where('user_id', '1')->first();
     	$googleKey = $apikey->google_key;
@@ -162,7 +172,7 @@ class GamesController extends Controller
     	$amazonSecret = $apikey->amazon_secret;
     	//dd($apikey);
 			//Search: list
-			$request_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=50&order='.request()->order.'&q='.$title.request()->langage.'&videoCaption='.request()->videoCaption.'&key='.decrypt($googleKey);
+			$request_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCategoryId=20&maxResults=50&order='.request()->order.'&q='.$title.'+'.$keyword.'&videoCaption='.request()->videoCaption.'&key='.decrypt($googleKey);
     	//dd($request_url);
 			$context = stream_context_create(array(
 		      'http' => array('ignore_errors' => true)
@@ -184,7 +194,7 @@ class GamesController extends Controller
 
     	//パラメータ値に指定できる part 名は、id、 snippet、 contentDetails、 fileDetails、 liveStreamingDetails、 player、 processingDetails、 recordingDetails、 statistics、 status、 suggestions、 topicDetails などです。
     	//videoid t3cLDDwLeJA
-			$request_url = 'https://www.googleapis.com/youtube/v3/videos?part=player,snippet&id='.$video.'&key='.decrypt($googleKey);
+			$request_url = 'https://www.googleapis.com/youtube/v3/videos?part=player,snippet,contentDetails&id='.$video.'&key='.decrypt($googleKey);
 			$context = stream_context_create(array(
 		      'http' => array('ignore_errors' => true)
 			 ));

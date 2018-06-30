@@ -8,12 +8,6 @@
     <meta name="discription" content="YouTubeゲーム動画の配信やゲーム情報などを記載したサイトです">
     <meta name="keywords" content="YouTube ゲーム, YouTube 動画 ゲーム, ゲーム おすすめ, ゲーム レビュー">
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-5643196548218931",
-        enable_page_level_ads: true
-      });
-    </script>
 
     <title>Game Chat</title>
 

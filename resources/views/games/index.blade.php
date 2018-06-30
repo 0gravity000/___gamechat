@@ -8,6 +8,11 @@
 			<form method="POST" action="/games/{{ $game->title }}">
 	      {{ csrf_field()}}
 
+		  <div class="form-group">
+		    <label for="keyword">追加キーワード</label>
+		    <input type="text" class="form-control" id="keyword" name="keyword" placeholder="複数指定する場合は空白で区切ってください 例)日本語 実況">
+		  </div>
+
 				<div class="row">
 	      <div class="col">
 				  <div class="form-group">
@@ -17,22 +22,6 @@
 				      <option value="viewCount">視聴回数</option>
 				      <option value="rating">評価</option>
 				      <option value="date">アップロード日</option>
-				    </select>
-				  </div>
-				</div>
-
-	      <div class="col">
-				  <div class="form-group">
-				    <label for="langage">言語</label>
-				    <select class="form-control" id="langage" name="langage">
-				      <option value="" selected="selected">指定しない</option>
-				      <option value="日本語">日本語</option>
-				      <option value="english">英語</option>
-				      <option value="中国">中国語</option>
-				      <option value="Español">スペイン語</option>
-				      <option value="Deutsch">ドイツ語</option>
-				      <option value="Français">フランス語</option>
-				      <option value="한국">韓国語</option>
 				    </select>
 				  </div>
 				</div>

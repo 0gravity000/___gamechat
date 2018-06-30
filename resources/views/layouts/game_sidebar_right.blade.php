@@ -2,11 +2,21 @@
   <div class="col">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title"></h5>
-        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum in temporibus magnam, molestias reprehenderit, eligendi, obcaecati tenetur fugit blanditiis quam pariatur qui sapiente asperiores tempore quos. Asperiores, dignissimos, fugiat. Fugit?</p>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- ad01 -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-5643196548218931"
+         data-ad-slot="8290401259"
+         data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
       </div>
     </div>
   </div>
+
 
 <!--
 <div class="row">
