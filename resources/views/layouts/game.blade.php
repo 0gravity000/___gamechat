@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="author" content="0gravity000">
     <!-- <link rel="icon" href="../../../../favicon.ico"> -->
-    <meta name="discription" content="ゲーム動画の配信やゲーム情報などを記載したサイトです">
-    <meta name="keywords" content="ゲーム, 動画, おすすめ, レビュー, ゲーム 動画, ゲーム おすすめ, ゲーム レビュー">
+    <meta name="discription" content="YouTubeゲーム動画の配信やゲーム情報などを記載したサイトです">
+    <meta name="keywords" content="YouTube ゲーム, YouTube 動画 ゲーム, ゲーム おすすめ, ゲーム レビュー">
+    <meta name="keywords" content="YouTube {{ $game->title }}, {{ $game->title }} 動画, {{ $game->title  }} レビュー">
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({

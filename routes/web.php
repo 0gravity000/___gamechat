@@ -19,6 +19,7 @@ Route::get('/home', 'GamesController@index')->name('home');
 Route::get('/games', 'GamesController@initialize');
 Route::get('/games/{game}', 'GamesController@show');
 Route::get('/games/{game}/{video}', 'GamesController@video');
+Route::post('/games/{game}', 'GamesController@sort');
 
 Route::get('/videos/search', 'VideosController@search');
 

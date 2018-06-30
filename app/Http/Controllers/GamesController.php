@@ -148,6 +148,35 @@ class GamesController extends Controller
   		return view('games.index', compact('videoPlayers_array'));
 			*/
     }
+
+    public function sort($title) {
+    	//dd($title);
+    	//dd(request());
+			$game = Game::where('title', $title)->first();
+			//タイトルにスペースや記号を含むとレスポンスにがNullになるので取る
+      $title = str_replace(array(" ", "  ", "　","(",")","ｰ" ,"－"), '', $title);	//改行コード削除
+
+    	$apikey = Apikey::where('user_id', '1')->first();
+    	$googleKey = $apikey->google_key;
+    	$amazonKey = $apikey->amazon_key;
+    	$amazonSecret = $apikey->amazon_secret;
+    	//dd($apikey);
+			//Search: list
+			$request_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=50&order='.request()->order.'&q='.$title.request()->langage.'&videoCaption='.request()->videoCaption.'&key='.decrypt($googleKey);
+    	//dd($request_url);
+			$context = stream_context_create(array(
+		      'http' => array('ignore_errors' => true)
+			 ));
+			$res = file_get_contents($request_url, false, $context);
+			//dd($res);
+			$respons = json_decode($res, false) ;
+			//dd($respons);
+			$gameitems = $respons->items;
+			//dd($gameitems);
+
+  		return view('games.index', compact('game', 'gameitems'));
+    }
+
     public function video($title, $video) {
 
     	$apikey = Apikey::where('user_id', '1')->first();
@@ -179,4 +208,5 @@ class GamesController extends Controller
 			$game = Game::where('title', $title)->first();
   		return view('games.video', compact('game', 'videoitems'));
     }
+
 }
