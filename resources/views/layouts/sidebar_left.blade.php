@@ -7,7 +7,7 @@
 	-->
 		@if($games != null)
 			@foreach($games as $game)
-				<a href="/games/{{ $game->id }}">{{ $game->title }}</a><br>
+				<a href="/games/{{ $game->title }}">{{ $game->title }}</a><br>
 			@endforeach
 		@endif
 	</div>

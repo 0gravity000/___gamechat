@@ -60,10 +60,10 @@ class GamesController extends Controller
   		return view('layouts.sidebar_left', compact('games'));
     }
 
-    public function show($id) {
-			$game = Game::where('id', $id)->first();
+    public function show($title) {
+			//$game = Game::where('title', $title)->first();
 			//dd($game->title);
-			$title = $game->title;
+			//$title = $game->title;
 			//タイトルにスペースや記号を含むとレスポンスにがNullになるので取る
       $title = str_replace(array(" ", "  ", "　","(",")","ｰ" ,"－"), '', $title);	//改行コード削除
 
