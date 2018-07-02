@@ -28,7 +28,7 @@
       <div class="col">
         @yield('gamecontent')
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         @include('layouts.game_sidebar_right')
       </div>
     </div>
