@@ -19,7 +19,7 @@ class CreateClassificationsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('game_classifications', function (Blueprint $table) {
+        Schema::create('game_classification', function (Blueprint $table) {
             $table->integer('game_id');
             $table->integer('classification_id');
             $table->primary(['game_id', 'classification_id']);

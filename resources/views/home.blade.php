@@ -1,7 +1,4 @@
-@extends('layouts.master')
 <link href="../css/starter-template.css" rel="stylesheet">
-
-@section('content')
 
   <div>
     <h1>Game Chat</h1>
@@ -11,6 +8,4 @@
     お気に入りのゲームをチェックしてみてください。<br>
     </p>
   </div>
-
-@endsection
 

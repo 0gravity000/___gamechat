@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Apikey;
 use App\Game;
+use App\Classification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
@@ -12,30 +13,103 @@ class GamesController extends Controller
 {
     public function index() {
     	//AppServiceProviderでSidebar_leftに$gamesを渡す
-  		//$games = Game::all()->sortBy('title');
-  		return view('home');
+  		$games = Game::all()->sortBy('title');
+  		return view('layouts.sidebar_left', compact('games'));
+    }
+
+    public function classification($Classification) {
+    	//dd($classification);
+  		$Classid = 1;
+    	if ($Classification == 'amazon') {
+    		$Classid = 1;
+    	} elseif($Classification == 'favorite') {
+    		$Classid = 2;
+    	}
+
+    	$classification = Classification::where('id', $Classid)->first();
+	   	//dd($classification);
+	   	$games = $classification->games;
+	   	//dd($games);
+  		$games = $games->sortBy('title');
+  		return view('layouts.sidebar_left', compact('games'));
     }
 
     public function initialize() {
+    	//amazonで人気のゲームの設定
       $storagePath = ('/public/games/');
       $storagePathName = $storagePath. 'games.txt';
       $contents = Storage::get($storagePathName);
 
-      $gamelists = [];
+      //$gamelists = [];
       $startpos = 0;
       while (mb_strpos($contents, ',', $startpos)) {
         $endpos = mb_strpos($contents, ',', $startpos);
         $title = mb_substr($contents, $startpos, $endpos - $startpos);
         $title = str_replace(array("\r\n", "\r", "\n"), '', $title);	//改行コード削除
-        $params = array(
-          "title" => $title,
-        );
+        //$params = array(
+        //  "title" => $title,
+        //);
         //var_dump($params);
-        array_push($gamelists, $params);
+        //array_push($gamelists, $params);
         //$br = mb_strpos($contents, '\n', $startpos);
         $startpos = $endpos +1;
+
+        //gamesに登録
+				$games = Game::where('title', $title)->first();
+				if (!$games) {
+					$game = new Game;
+					$game->title = $title;
+					$game->priority = 500;
+					$game->save();
+				}
+
+	  		//classificationに登録
+	  		$game = Game::where('title', $title)->first();
+				$classifications = DB::table('game_classification')->where('classification_id', 1)
+																							->where('game_id', $game->id)->first();
+				if (!$classifications) {
+					DB::table('game_classification')->insert([
+		        'game_id' => $game->id,
+		        'classification_id' => 1,
+					]);
+				}
       }
 
+    	//お気に入りのゲームの設定
+      $storagePath = ('/public/games/');
+      $storagePathName = $storagePath. 'gamesfavorite.txt';
+      $contents = Storage::get($storagePathName);
+
+      //$gamelists = [];
+      $startpos = 0;
+      while (mb_strpos($contents, ',', $startpos)) {
+        $endpos = mb_strpos($contents, ',', $startpos);
+        $title = mb_substr($contents, $startpos, $endpos - $startpos);
+        $title = str_replace(array("\r\n", "\r", "\n"), '', $title);	//改行コード削除
+        $startpos = $endpos +1;
+
+        //gamesに登録
+				$games = Game::where('title', $title)->first();
+				if (!$games) {
+					$game = new Game;
+					$game->title = $title;
+					$game->priority = 400;
+					$game->save();
+				}
+
+	  		//classificationに登録
+	  		$game = Game::where('title', $title)->first();
+				$classifications = DB::table('game_classification')->where('classification_id', 2)
+																							->where('game_id', $game->id)->first();
+				if (!$classifications) {
+					DB::table('game_classification')->insert([
+		        'game_id' => $game->id,
+		        'classification_id' => 2,
+					]);
+				}
+      }
+
+      /*
   		$games = Game::all();
   		if ($games->isEmpty()) {
 	  		//新規作成の場合
@@ -57,10 +131,10 @@ class GamesController extends Controller
 	  				}
 	  			}
   		}
+			*/
 
-  		$games = Game::all();
-  		//dd($games);
-  		return view('layouts.sidebar_left', compact('games'));
+  		return back();
+  		//return view('layouts.sidebar_left', compact('games'));
     }
 
     public function show($title) {

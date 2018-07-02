@@ -8,10 +8,10 @@
     <ul class="navbar-nav mr-auto">
       </li>
       <li class="nav-item dropdown active">
-        <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">人気の動画</a>
+        <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ゲーム</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" href="#">Amazonで人気のゲーム</a>
-          <a class="dropdown-item" href="#">お気に入りのゲーム</a>
+          <a class="dropdown-item" href="/home/amazon">Amazonで人気のゲーム</a>
+          <a class="dropdown-item" href="/home/favorite">お気に入りのゲーム</a>
         </div>
       </li>
       @if (Auth::check())

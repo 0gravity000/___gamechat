@@ -13,7 +13,7 @@ class Game extends Model
 
   public function classifications()
   {
-    return $this->belongsToMany(Classification::class);
+    return $this->belongsToMany(Classification::class, 'game_classification');
   }
 
   public function platforms()

@@ -12,10 +12,11 @@
 */
 
 Route::get('/', function () {
-    return redirect('/home');
+    return view('/welcome');
 });
 
 Route::get('/home', 'GamesController@index')->name('home');
+Route::get('/home/{classification}', 'GamesController@classification');
 Route::get('/games', 'GamesController@initialize');
 Route::get('/games/{game}', 'GamesController@show');
 Route::get('/games/{game}/{video}', 'GamesController@video');

@@ -1,5 +1,7 @@
+@extends('layouts.master')
 <link href="../css/starter-template.css" rel="stylesheet">
 
+@section('sidebar_left')
   <div class="sidebar-module">
   <!--
     <a href="/videos/search">キーワードで検索する</a><br>
@@ -11,3 +13,5 @@
 			@endforeach
 		@endif
 	</div>
+
+@endsection
