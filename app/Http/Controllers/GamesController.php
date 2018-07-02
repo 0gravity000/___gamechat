@@ -38,6 +38,7 @@ class GamesController extends Controller
 
   		$games = Game::all();
   		if ($games->isEmpty()) {
+	  		//新規作成の場合
   			for ($i=0; $i < count($gamelists); $i++) { 
   				$game = new Game;
   				$game->title = array_get($gamelists[$i], 'title');
@@ -45,6 +46,7 @@ class GamesController extends Controller
   				$game->save();
   			}
   		} else {
+		  		//既にリストがある場合
 	  			for ($i=0; $i < count($gamelists); $i++) {
 	  				$games = Game::where('title', array_get($gamelists[$i], 'title'));
 	  				if (!$games) {

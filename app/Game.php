@@ -10,4 +10,20 @@ class Game extends Model
   {
     return $this->hasMany(Post::class);
   }
+
+  public function classifications()
+  {
+    return $this->belongsToMany(Classification::class);
+  }
+
+  public function platforms()
+  {
+    return $this->belongsToMany(Platform::class);
+  }
+
+  public function maker()
+  {
+    return $this->belongsTo(Maker::class);
+  }
+
 }

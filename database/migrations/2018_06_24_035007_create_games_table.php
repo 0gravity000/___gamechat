@@ -16,11 +16,13 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('maker')->nullable();
-            $table->string('platform')->nullable();
-            $table->text('officialsite')->nullable();
+            $table->integer('maker_id')->nullable();
+            //$table->string('maker')->nullable();
+            //$table->string('platform')->nullable();
+            //$table->text('officialsite')->nullable();
             $table->text('summary')->nullable();
             $table->integer('priority')->nullable();
+            $table->integer('favorite')->nullable();
             $table->timestamps();
         });
     }
