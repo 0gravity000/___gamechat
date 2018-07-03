@@ -25,7 +25,7 @@
         @yield('sidebar_left')
       </div>
       <div class="col">
-        @yield('content')
+        @include('layouts.home')
       </div>
       <div class="col-sm-3">
         @include('layouts.sidebar_right')

@@ -1,6 +1,6 @@
-@extends('layouts.master')
+@extends('welcome')
 
-@section('content')
+@section('topcontent')
 
     <h1>Register</h1>
 

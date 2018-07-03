@@ -1,6 +1,6 @@
-@extends('layouts.master')
+@extends('welcome')
 
-@section('content')
+@section('topcontent')
     <h1>Sign In</h1>
 
     <form method="POST" action="/login">
