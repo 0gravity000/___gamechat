@@ -22,7 +22,6 @@
     <main role="main" class="container-fluid">
     <div class="row">
       <div class="col-sm-3">
-        サイドバー
       </div>
       <div class="col">
         @yield('topcontent')
