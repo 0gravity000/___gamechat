@@ -19,8 +19,8 @@
           <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</a>
           <div class="dropdown-menu" aria-labelledby="dropdown01">
         @if (Auth::user()->id == 1)
-            <a class="dropdown-item" href="/api/register">API Keyの登録</a>
-            <a class="dropdown-item" href="/games">ゲーム一覧の取得</a>
+            <a class="dropdown-item" href="/admin/api">API Keyの登録</a>
+            <a class="dropdown-item" href="/admin">ゲーム一覧の取得</a>
         @endif
             <a class="dropdown-item" href="/logout">Logout</a>
           </div>

@@ -1,10 +1,10 @@
-@extends('layouts.master')
+@extends('welcome')
 
-@section('content')
+@section('topcontent')
     <link href="../../css/starter-template.css" rel="stylesheet">
 
     <h1>API Keyの登録</h1>
-    <form method="POST" action="/api/register">
+    <form method="POST" action="/admin/api">
       {{ csrf_field() }}
       <div class="form-group">
         <label for="google_key">Google API Key:</label>

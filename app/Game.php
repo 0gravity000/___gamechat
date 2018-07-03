@@ -11,6 +11,11 @@ class Game extends Model
     return $this->hasMany(Post::class);
   }
 
+  public function gamealises()
+  {
+    return $this->hasMany(Gamealias::class);
+  }
+
   public function classifications()
   {
     return $this->belongsToMany(Classification::class, 'game_classification');

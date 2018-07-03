@@ -17,7 +17,14 @@ Route::get('/', function () {
 
 Route::get('/home', 'GamesController@index')->name('home');
 Route::get('/home/{classification}', 'GamesController@classification');
-Route::get('/games', 'GamesController@initialize');
+
+Route::get('/admin', 'AdminController@initialize');
+//Route::get('/games', 'GamesController@initialize');
+Route::get('/admin/api','AdminController@create_api');
+//Route::get('/api/register','ApikeysController@create');
+Route::post('/admin/api','AdminController@store_api');
+//Route::post('/api/register','ApikeysController@store');
+
 Route::get('/games/{game}', 'GamesController@show');
 Route::get('/games/{game}/{video}', 'GamesController@video');
 Route::post('/games/{game}', 'GamesController@sort');
@@ -30,5 +37,3 @@ Route::get('/login','SessionController@create');
 Route::post('/login','SessionController@store');
 Route::get('/logout','SessionController@destroy');
 
-Route::get('/api/register','ApikeysController@create');
-Route::post('/api/register','ApikeysController@store');
