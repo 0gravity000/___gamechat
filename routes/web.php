@@ -24,6 +24,8 @@ Route::get('/admin/api','AdminController@create_api');
 //Route::get('/api/register','ApikeysController@create');
 Route::post('/admin/api','AdminController@store_api');
 //Route::post('/api/register','ApikeysController@store');
+Route::get('/admin/gamealias','AdminController@create_gamealias');
+Route::post('/admin/gamealias','AdminController@store_gamealias');
 
 Route::get('/games/{game}', 'GamesController@show');
 Route::get('/games/{game}/{video}', 'GamesController@video');

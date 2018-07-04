@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Apikey;
 use App\Game;
 use App\Classification;
+use App\Gamealias;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
@@ -35,7 +36,6 @@ class GamesController extends Controller
     }
 
     public function show($title) {
-
 			$game = Game::where('title', $title)->first();
 			//タイトルにスペースを含むとレスポンスにがNullになるの + に置換する
       $title = str_replace(array(" ", "  ", "　"), '+', $title);	//改行コード削除
@@ -58,8 +58,9 @@ class GamesController extends Controller
 			//dd($respons);
 			$gameitems = $respons->items;
 			//dd($gameitems);
-
-  		return view('games.index', compact('game', 'gameitems'));
+			$aliases = $game->gamealises;
+			//dd($aliases);
+  		return view('games.index', compact('game', 'gameitems', 'aliases'));
 
     	/*
 			//$game = Game::where('title', $title)->first();
@@ -130,6 +131,10 @@ class GamesController extends Controller
     	//dd(request());
     	//dd('stop');
 			$game = Game::where('title', $title)->first();
+
+			if(request()->alias != 'none'){
+				$title = request()->alias;
+			}
 			//タイトルにスペースを含むとレスポンスにがNullになるの + に置換する
       $title = str_replace(array(" ", "  ", "　"), '+', $title);	//改行コード削除
 			//タイトルにスペースや記号を含むとレスポンスにがNullになるので取る
@@ -156,8 +161,9 @@ class GamesController extends Controller
 			//dd($respons);
 			$gameitems = $respons->items;
 			//dd($gameitems);
-
-  		return view('games.index', compact('game', 'gameitems'));
+			$aliases = $game->gamealises;
+			//dd($aliases);
+  		return view('games.index', compact('game', 'gameitems','aliases'));
     }
 
     public function video($title, $video) {

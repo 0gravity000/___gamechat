@@ -2,11 +2,22 @@
 
 @section('gamecontent')
 	<h1>{{ $game->title }}</h1>
+
 	<hr>
 		<details>
 		  <summary>検索条件を指定する</summary>
 			<form method="POST" action="/games/{{ $game->title }}">
 	      {{ csrf_field()}}
+
+      <div class="form-group">
+        <label for="alias">別名</label>
+        <select class="form-control" name="alias">
+			      <option value="none" selected="selected">別名で検索しない</option>
+          @foreach($aliases as $alias)
+            <option value="{{ $alias->title }}">{{ $alias->title }} で検索</option>
+          @endforeach
+        </select>
+      </div>
 
 		  <div class="form-group">
 		    <label for="keyword">追加キーワード</label>

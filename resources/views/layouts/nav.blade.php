@@ -21,6 +21,7 @@
         @if (Auth::user()->id == 1)
             <a class="dropdown-item" href="/admin/api">API Keyの登録</a>
             <a class="dropdown-item" href="/admin">ゲーム一覧の取得</a>
+            <a class="dropdown-item" href="/admin/gamealias">ゲーム別名の登録</a>
         @endif
             <a class="dropdown-item" href="/logout">Logout</a>
           </div>

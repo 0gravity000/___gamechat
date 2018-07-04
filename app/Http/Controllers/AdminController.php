@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Game;
 use App\Apikey;
+use App\Gamealias;
 
 class AdminController extends Controller
 {
@@ -94,6 +95,12 @@ class AdminController extends Controller
     {
       return view('admin.create_api');
     }
+    public function create_gamealias()
+    {
+    	$games = Game::all();
+    	//dd($games);
+      return view('admin.create_gamealias', compact('games'));
+    }
 
     public function store_api()
     {
@@ -116,5 +123,22 @@ class AdminController extends Controller
       return redirect()->home();
     }    
 
+    public function store_gamealias()
+    {
+      //Validate the form
+      $this->Validate(request(),[
+        'alias' => 'required',
+      ]);
+
+      $game = Game::where('title', request()->title)->first();
+      //Create and save the user.
+      $alias = Gamealias::create([
+      	'game_id' => $game->id,
+      	'title' => request()->alias,
+    	]);
+
+      //redirect to the home page.
+      return back();
+    }    
 
 }
