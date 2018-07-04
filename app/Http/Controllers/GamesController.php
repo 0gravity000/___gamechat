@@ -7,6 +7,7 @@ use App\Apikey;
 use App\Game;
 use App\Classification;
 use App\Gamealias;
+use App\Gamekeyword;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
@@ -141,6 +142,23 @@ class GamesController extends Controller
       //$title = str_replace(array(" ", "  ", "　","(",")","ｰ" ,"－"), '', $title);	//改行コード削除
       $keyword = '';
       if(request()->keyword){
+	      //DBに登録
+      	$Keywords = $game->gamekeywords;
+      	//dd($Keywords);
+      	$Keyword = $Keywords->where('keyword', request()->keyword)->first();
+      	if(!$Keyword){
+      		//キーワードの登録がない場合は新規に追加
+      		$Keyword = new Gamekeyword;
+      		$Keyword->game_id = $game->id;
+      		$Keyword->keyword = request()->keyword;
+      		$Keyword->count = 1;
+      		$Keyword->save();
+      	} else {
+      		//キーワードの登録がある場合はカウントを増やす
+      		$Keyword->count += 1;
+      		$Keyword->save();
+      	}
+
 	      $keyword = str_replace(array(" ", "  ", "　"), '+', request()->keyword);	//改行コード削除
       }
 

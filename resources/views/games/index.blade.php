@@ -20,7 +20,7 @@
       </div>
 
 		  <div class="form-group">
-		    <label for="keyword">追加キーワード</label>
+		    <label for="keyword">キーワード</label>
 		    <input type="text" class="form-control" id="keyword" name="keyword" placeholder="複数指定する場合は空白で区切ってください 例)日本語 実況">
 		  </div>
 
