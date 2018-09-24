@@ -39,3 +39,5 @@ Route::get('/login','SessionController@create');
 Route::post('/login','SessionController@store');
 Route::get('/logout','SessionController@destroy');
 
+//記事
+Route::get('/articles/Windows10_PC_Fate_Stay_night', 'ArticlesController@Windows10_PC_Fate_Stay_night');

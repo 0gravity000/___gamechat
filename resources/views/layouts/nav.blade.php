@@ -6,7 +6,6 @@
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
-      </li>
       <li class="nav-item dropdown active">
         <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ゲーム</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -27,6 +26,16 @@
           </div>
         </li>
       @endif
+
+      <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">記事</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" href="/articles/Windows10_PC_Fate_Stay_night">Windows10でPC版 Fate/Stay nightを実行する</a>
+        </div>
+      </li>
+
     </ul>
   </div>
+
+
 </nav>
